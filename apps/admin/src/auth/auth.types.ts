@@ -6,7 +6,7 @@ export interface AccessTokenInterface {
   uuid: string;
   name: string;
   email: string;
-  user?: any
+  user?: any;
 }
 
 export interface AuthRequest extends Request {

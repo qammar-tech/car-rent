@@ -44,6 +44,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/user/tsconfig.lib.json"
       }
+    },
+    "sensors": {
+      "type": "library",
+      "root": "libs/sensors",
+      "entryFile": "index",
+      "sourceRoot": "libs/sensors/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/sensors/tsconfig.lib.json"
+      }
     }
   }
 }

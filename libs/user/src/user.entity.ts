@@ -18,10 +18,18 @@ export class User {
   @ApiProperty({
     description: `Unique uuid`,
     maximum: 36,
-    example: '28d1b563-eae0-4a5a-84cf-5b8f4b527411',
+    example: '28',
   })
   @Column({ type: 'varchar', nullable: false, length: 36 })
   uuid: string;
+
+  @ApiProperty({
+    description: `User Credits`,
+    maximum: 36,
+    example: '28d1b563-eae0-4a5a-84cf-5b8f4b527411',
+  })
+  @Column({ type: 'varchar', nullable: true, length: 66 })
+  credits: string;
 
   @ApiProperty({
     example: 'John Doe',

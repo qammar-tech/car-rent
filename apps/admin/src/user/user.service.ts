@@ -5,6 +5,9 @@ import { UpdateUserValidationDto } from './dto/update-user.validation.dto';
 import { UserFilterDto } from './dto/user.filter.dto';
 import { PagingResult } from 'typeorm-cursor-pagination';
 import { User } from '@app/user/user.entity';
+import { AddUserValidationDto } from './dto/add-user-to-group.dto';
+import { UserStatus } from '@app/user';
+import { UserType } from '@admin/auth/auth.types';
 
 @Injectable()
 export class UserService {
@@ -73,5 +76,31 @@ export class UserService {
     const user = await this.userRepository.findOne({ where: { id } });
 
     return user !== null;
+  }
+
+  async addUser(data: AddUserValidationDto) {
+    const queryRunner = this.userRepository.dataSource.createQueryRunner();
+
+    try {
+      await queryRunner.connect();
+      await queryRunner.startTransaction();
+
+      const user = await this.userRepository.save({
+        ...data,
+        password: 'password',
+        status: data.status ? data.status : UserStatus.Active,
+        role: UserType.Individual,
+      });
+
+      await queryRunner.commitTransaction();
+
+      return this.userRepository.findOne({ where: { id: user.id } });
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+
+      throw err;
+    } finally {
+      await queryRunner.release();
+    }
   }
 }
