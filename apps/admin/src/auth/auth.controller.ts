@@ -11,7 +11,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ApiResponse } from '@nestjs/swagger';
 import { AuthService } from '@admin/auth/auth.service';
 import { LocalAuthGuard } from '@admin/auth/guards/local-auth.guard';
 import { Response } from 'express';
@@ -43,6 +42,36 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const authData = await this.authService.login(req.admin, body);
+
+    res.cookie('refreshToken', authData.refreshToken, {
+      httpOnly: this.configService.get('jwtConfig.refreshTokenCookieHttpOnly'),
+      secure: this.configService.get('jwtConfig.refreshTokenCookieSecure'),
+      maxAge:
+        this.configService.get('jwtConfig.refreshTokenDurationDays') *
+        1000 *
+        60 *
+        60 *
+        24,
+      domain: this.configService.get('jwtConfig.refreshTokenCookieDomain'),
+    });
+
+    return { accessToken: authData.accessToken };
+  }
+
+  @Public()
+  @UseInterceptors(
+    new RequestToBodyInterceptor('headers', 'headers'),
+    new RequestToBodyInterceptor('ip', 'ip'),
+  )
+  @UseGuards(LocalAuthGuard)
+  @HttpCode(HttpStatus.CREATED)
+  @Post('login-user')
+  async loginWithUser(
+    @Req() req: AuthRequest,
+    @Body() body: LoginDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const authData = await this.authService.loginWithUser(req.admin, body);
 
     res.cookie('refreshToken', authData.refreshToken, {
       httpOnly: this.configService.get('jwtConfig.refreshTokenCookieHttpOnly'),

@@ -18,13 +18,14 @@ import { PagingResult } from 'typeorm-cursor-pagination';
 import { UserFilterDto } from './dto/user.filter.dto';
 import { JwtAuthGuard } from '@admin/auth/guards/jwt-auth.guard';
 import { User } from '@app/user/user.entity';
-import { PaginatedResult } from '@app/common/pagination/pagination.types';
+import { Public } from '@admin/auth/decorators/public.decorator';
 
 @UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Public()
   @ApiOperation({ description: `Create a new user` })
   @Post()
   async create(@Body() createUserDto: CreateUserValidationDto) {

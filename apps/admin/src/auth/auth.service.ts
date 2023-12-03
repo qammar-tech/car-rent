@@ -9,11 +9,14 @@ import { AccessTokenInterface } from './auth.types';
 import { LoginDto } from './dto/login.dto';
 import { TokensResponseDto } from './dto/tokens-response.dto';
 import { RefreshTokensDto } from './dto/refresh-tokens.dto';
+import { User } from '@app/user/user.entity';
+import { UserService } from '@admin/user/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private adminService: AdminService,
+    private userService: UserService,
     private jwtService: JwtService,
     private adminRefreshTokenService: AdminRefreshTokenService,
   ) {}
@@ -36,6 +39,24 @@ export class AuthService {
     return null;
   }
 
+  async validateUsers(
+    email: string,
+    pass: string,
+  ): Promise<Partial<Admin> | null> {
+    const user = await this.userService.findByEmail(email);
+
+    if (user && user.password === pass) {
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        uuid: user.uuid,
+      };
+    }
+
+    return null;
+  }
+
   async login(admin: Admin, body: LoginDto): Promise<TokensResponseDto> {
     const accessToken = await this.createAccessToken(admin);
     const refreshToken = await this.createRefreshToken(admin, body);
@@ -43,6 +64,14 @@ export class AuthService {
     return {
       accessToken,
       refreshToken: refreshToken.token,
+    };
+  }
+
+  async loginWithUser(user: Admin, body: LoginDto): Promise<TokensResponseDto> {
+    const accessToken = await this.createAccessTokenForUser(user);
+
+    return {
+      accessToken,
     };
   }
 
@@ -55,6 +84,16 @@ export class AuthService {
       name: admin.name,
       email: admin.email,
       uuid: admin.uuid,
+    };
+
+    return this.jwtService.signAsync(payload);
+  }
+
+  private async createAccessTokenForUser(user: Admin): Promise<string> {
+    const payload: AccessTokenInterface = {
+      name: user.name,
+      email: user.email,
+      uuid: user.uuid,
     };
 
     return this.jwtService.signAsync(payload);

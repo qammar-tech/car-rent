@@ -34,9 +34,15 @@ export class CreateUserTable1664198326986 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'phone_number',
+            name: 'password',
             type: 'varchar',
             length: '255',
+            isNullable: false,
+          },
+          {
+            name: 'role',
+            type: 'enum',
+            enum: ['individual', 'organization'],
             isNullable: false,
           },
           {
