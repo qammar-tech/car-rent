@@ -42,7 +42,7 @@ export class AuthService {
   async validateUsers(
     email: string,
     pass: string,
-  ): Promise<Partial<Admin> | null> {
+  ): Promise<Partial<Admin> | null | any> {
     const user = await this.userService.findByEmail(email);
 
     if (user && user.password === pass) {
@@ -51,6 +51,7 @@ export class AuthService {
         name: user.name,
         email: user.email,
         uuid: user.uuid,
+        credits: user.credits as any,
       };
     }
 
@@ -94,10 +95,10 @@ export class AuthService {
       name: user.name,
       email: user.email,
       uuid: user.uuid,
-      user
+      user,
     };
 
-    return { token: await this.jwtService.signAsync(payload), user}
+    return { token: await this.jwtService.signAsync(payload), user };
   }
 
   private async createRefreshToken(

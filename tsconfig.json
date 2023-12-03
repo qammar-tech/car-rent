@@ -36,6 +36,12 @@
       "@app/user/*": [
         "libs/user/src/*"
       ],
+      "@app/sensors": [
+        "libs/sensors/src"
+      ],
+      "@app/sensors/*": [
+        "libs/sensors/src/*"
+      ],
       "@app/env": [
         "libs/env/src"
       ],

@@ -17,6 +17,7 @@ import {
 } from 'nestjs-i18n';
 import { Locale } from '@app/common/translations/translation.types';
 import { DatabaseModule } from '@app/database/database.module';
+import { SensorModule } from './sensors/sensors.module';
 
 EnvHelper.verifyNodeEnv();
 
@@ -46,6 +47,7 @@ EnvHelper.verifyNodeEnv();
     UserModule,
     AuthModule,
     AdminModule,
+    SensorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
