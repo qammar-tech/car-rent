@@ -13,5 +13,10 @@ export interface AuthRequest extends Request {
   user: User;
 }
 
+export enum UserType {
+  Individual = 'individual',
+  Organization = 'organization',
+}
+
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface GuestRequest extends Request {}

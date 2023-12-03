@@ -1,3 +1,4 @@
+import { UserType } from '@admin/auth/auth.types';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import {
@@ -42,12 +43,22 @@ export class User {
   email: string;
 
   @ApiProperty({
-    example: '+17951110000',
+    example: '214231',
     required: false,
-    description: 'Phone number is E.164 format',
+    maximum: 255,
+    description: 'E-mail',
   })
   @Column({ type: 'varchar', nullable: false, length: 255 })
-  phoneNumber: string;
+  password: string;
+
+  @ApiProperty({
+    description: 'User type',
+    example: UserType.Individual,
+    required: true,
+    enum: UserType,
+  })
+  @Column({ type: 'enum', nullable: false, enum: UserType })
+  role: UserType;
 
   @ApiProperty({
     description: 'Date when the user was created',

@@ -9,9 +9,11 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthController } from './auth.controller';
 import { RefreshTokenValidator } from './validators/refresh-token.validator';
+import { UserModule } from '@admin/user/user.module';
 @Module({
   imports: [
     AdminModule,
+    UserModule,
     AdminRefreshTokenModule,
     PassportModule,
     JwtModule.registerAsync({

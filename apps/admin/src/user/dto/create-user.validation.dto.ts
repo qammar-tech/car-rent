@@ -9,9 +9,12 @@ import {
   IsString,
   IsUrl,
   MaxLength,
+  MinLength,
 } from 'class-validator';
 import { UserStatus } from '@app/user/user.types';
 import { ValidateHelper } from '@app/common/helpers/validate.helper';
+import { UserType } from '@admin/auth/auth.types';
+import { Match } from '@app/common/validators/match.decorator';
 
 export class CreateUserValidationDto {
   @ApiProperty({ example: 'John Bucks', required: true })
@@ -26,24 +29,24 @@ export class CreateUserValidationDto {
   @MaxLength(255)
   email: string;
 
-  @ApiProperty({
-    example:
-      'https://img.new.livestream.com/events/00000000004f5dbd/7ffdcd50-2e4b-497a-acca-bc33070c3e12.jpg',
-    required: false,
-    maxLength: 2048,
-  })
+  @ApiProperty({ example: 'example@domain.com', required: true })
   @IsNotEmpty()
-  @IsUrl()
-  @IsOptional()
-  @MaxLength(2048)
-  photoUrl: string;
-
-  @ApiProperty({ example: '011-971-55-000-0000', required: true })
-  @Transform(({ value }) => ValidateHelper.sanitizePhoneNumber(value))
-  @IsNotEmpty()
-  @IsPhoneNumber()
   @MaxLength(255)
-  phoneNumber: string;
+  password: string;
+
+  @ApiProperty({
+    example: 'abcd1234',
+    required: true,
+    minLength: 1,
+    maxLength: 255,
+  })
+  @Match(CreateUserValidationDto, (s) => s.password, {
+    message: 'Passwords do not match',
+  })
+  @IsString()
+  @MinLength(1)
+  @MaxLength(255)
+  repeatPassword: string;
 
   @ApiProperty({
     example: UserStatus.Active,
@@ -53,4 +56,12 @@ export class CreateUserValidationDto {
   @IsOptional()
   @IsEnum(UserStatus)
   status: UserStatus;
+
+  @ApiProperty({
+    example: UserType.Individual,
+    required: false,
+    default: UserType.Individual,
+  })
+  @IsEnum(UserType)
+  role: UserType;
 }

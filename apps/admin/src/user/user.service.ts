@@ -11,13 +11,14 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async create(createUserData: CreateUserValidationDto) {
+    const { repeatPassword, ...restParams } = createUserData;
     const queryRunner = this.userRepository.dataSource.createQueryRunner();
 
     try {
       await queryRunner.connect();
       await queryRunner.startTransaction();
 
-      const user = await this.userRepository.save(createUserData);
+      const user = await this.userRepository.save({ ...restParams });
 
       await queryRunner.commitTransaction();
 
@@ -47,6 +48,10 @@ export class UserService {
     return this.userRepository.findOne({ where: { id } });
   }
 
+  async findByEmail(email: string): Promise<User> {
+    return this.userRepository.findOne({ where: { email } });
+  }
+
   async findByUuid(uuid: string): Promise<User> {
     return this.userRepository.findOne({ where: { uuid } });
   }
@@ -59,11 +64,7 @@ export class UserService {
   }
 
   async findUserByEmailOrPhoneNumber(value: string): Promise<boolean> {
-    let user = this.userRepository.findBy({ email: value });
-
-    if (!user) {
-      user = this.userRepository.findBy({ phoneNumber: value });
-    }
+    const user = this.userRepository.findBy({ email: value });
 
     return user !== null;
   }

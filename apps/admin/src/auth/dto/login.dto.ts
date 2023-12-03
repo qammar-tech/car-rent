@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   Allow,
   IsEmail,
+  IsOptional,
   IsString,
   MaxLength,
   MinLength,
@@ -32,6 +33,7 @@ export class LoginDto {
     minLength: 8,
     maxLength: 64,
   })
+  @IsOptional()
   @IsString()
   @MinLength(8)
   @MaxLength(64)
