@@ -37,11 +37,7 @@ export class AppBootstrapManager {
         }),
       );
 
-    app.enableCors({
-      origin: ['*'],
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-      credentials: true,
-    });
+    app.enableCors();
 
     // app.use(addBodyToResponse);
     // app.useLogger(app.get(Logger));

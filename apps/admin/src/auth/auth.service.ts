@@ -89,14 +89,15 @@ export class AuthService {
     return this.jwtService.signAsync(payload);
   }
 
-  private async createAccessTokenForUser(user: Admin): Promise<string> {
+  private async createAccessTokenForUser(user: Admin): Promise<any> {
     const payload: AccessTokenInterface = {
       name: user.name,
       email: user.email,
       uuid: user.uuid,
+      user
     };
 
-    return this.jwtService.signAsync(payload);
+    return { token: await this.jwtService.signAsync(payload), user}
   }
 
   private async createRefreshToken(

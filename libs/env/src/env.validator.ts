@@ -37,7 +37,7 @@ export class EnvironmentVariables {
   TYPEORM_PORT: number;
 
   @IsString({ groups: ['database', 'producer', 'consumer', 'web', 'admin'] })
-  @MinLength(1, {
+  @MinLength(0, {
     groups: ['database', 'producer', 'consumer', 'web', 'admin'],
   })
   TYPEORM_PASSWORD: string;
