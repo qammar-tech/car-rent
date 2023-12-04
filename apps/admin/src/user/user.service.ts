@@ -103,4 +103,8 @@ export class UserService {
       await queryRunner.release();
     }
   }
+
+  async updateUserCredits(id: number) {
+    return this.userRepository.update({ id: id }, { credits: '200.00' });
+  }
 }

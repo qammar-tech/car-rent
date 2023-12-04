@@ -53,6 +53,18 @@
       ],
       "@app/database/*": [
         "libs/database/src/*"
+      ],
+      "@app/payments": [
+        "libs/payments/src"
+      ],
+      "@app/payments/*": [
+        "libs/payments/src/*"
+      ],
+      "@app/games": [
+        "libs/games/src"
+      ],
+      "@app/games/*": [
+        "libs/games/src/*"
       ]
     }
   },
