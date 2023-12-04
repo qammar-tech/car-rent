@@ -18,6 +18,8 @@ import {
 import { Locale } from '@app/common/translations/translation.types';
 import { DatabaseModule } from '@app/database/database.module';
 import { SensorModule } from './sensors/sensors.module';
+import { PaymentsModule } from './payments/payments.module';
+import { GamesModule } from './games/games.module';
 
 EnvHelper.verifyNodeEnv();
 
@@ -48,6 +50,8 @@ EnvHelper.verifyNodeEnv();
     AuthModule,
     AdminModule,
     SensorModule,
+    PaymentsModule,
+    GamesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
