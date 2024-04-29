@@ -105,10 +105,8 @@
       "^@app/env/(.*)$": "<rootDir>/libs/env/src/$1",
       "^@app/common/(.*)$": "<rootDir>/libs/common/src/$1",
       "^@app/user/(.*)$": "<rootDir>/libs/user/src/$1",
-      "^@app/sensors/(.*)$": "<rootDir>/libs/sensors/src/$1",
-      "^@app/database/(.*)$": "<rootDir>/libs/database/src/$1",
-      "^@app/games/(.*)$": "<rootDir>/libs/games/src/$1",
-      "^@app/payments/(.*)$": "<rootDir>/libs/payments/src/$1"
+      "^@app/tasks/(.*)$": "<rootDir>/libs/tasks/src/$1",
+      "^@app/database/(.*)$": "<rootDir>/libs/database/src/$1"
     }
   }
 }

@@ -1,11 +1,10 @@
-import { UserStatus } from '@app/user/user.types';
-import { MigrationInterface, QueryRunner, Table, TableIndex } from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateUserTable1664198326986 implements MigrationInterface {
+export class CreateTaskTable1714175135412 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'user',
+        name: 'tasks',
         columns: [
           {
             name: 'id',
@@ -28,22 +27,28 @@ export class CreateUserTable1664198326986 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'email',
+            name: 'description',
             type: 'varchar',
             length: '255',
-            isNullable: false,
+            isNullable: true,
           },
           {
-            name: 'password',
-            type: 'varchar',
-            length: '255',
-            isNullable: false,
+            name: 'admin_id',
+            type: 'int',
+            unsigned: true,
+            isNullable: true,
           },
           {
-            name: 'role',
+            name: 'user_id',
+            type: 'int',
+            unsigned: true,
+            isNullable: true,
+          },
+          {
+            name: 'status',
             type: 'enum',
-            enum: ['Admin', 'Client'],
-            isNullable: false,
+            enum: ['CREATED', 'IN_PROGRESS', 'DONE', 'DELETED'],
+            default: `'CREATED'`,
           },
           {
             name: 'created_at',
@@ -60,28 +65,12 @@ export class CreateUserTable1664198326986 implements MigrationInterface {
             type: 'datetime',
             isNullable: true,
           },
-          {
-            name: 'status',
-            type: 'enum',
-            enum: Object.values(UserStatus),
-            default: `'${UserStatus.Creating}'`,
-          },
         ],
-      }),
-      true,
-    );
-
-    await queryRunner.createIndex(
-      'user',
-      new TableIndex({
-        name: 'idx_user_uuid',
-        columnNames: ['uuid'],
-        isUnique: true,
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user');
+    await queryRunner.dropTable('tasks');
   }
 }

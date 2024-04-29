@@ -10,6 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthController } from './auth.controller';
 import { RefreshTokenValidator } from './validators/refresh-token.validator';
 import { UserModule } from '@admin/user/user.module';
+import { InviteLinkValidator } from './validators/invite-link.validator';
 @Module({
   imports: [
     AdminModule,
@@ -31,7 +32,13 @@ import { UserModule } from '@admin/user/user.module';
       },
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, RefreshTokenValidator],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    RefreshTokenValidator,
+    InviteLinkValidator,
+  ],
   controllers: [AuthController],
 })
 export class AuthModule {}

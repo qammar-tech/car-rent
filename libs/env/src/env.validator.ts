@@ -172,6 +172,11 @@ export class EnvironmentVariables {
   @Max(80, { groups: ['web'] })
   APP_AUTH_CODE_TTL_MINUTES: number;
 
+  @IsInt({ groups: ['web'] })
+  @Min(1, { groups: ['web'] })
+  @Max(80, { groups: ['web'] })
+  INVITE_LINK_EXPIRES_HOURS: number;
+
   @IsIn(['true', 'false'], { groups: ['web'] })
   APP_AUTH_CODE_FAKE_GENERATOR: string;
 

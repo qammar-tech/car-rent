@@ -7,7 +7,10 @@ import {
   DeleteDateColumn,
   OneToMany,
   JoinColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
+import { User } from '@app/user/user.entity';
 
 @Entity('admin')
 export class Admin {
@@ -54,4 +57,8 @@ export class Admin {
   )
   @JoinColumn({ name: 'id', referencedColumnName: 'admin_id' })
   refreshTokens: AdminRefreshToken[];
+
+  @ManyToMany(() => User, (users) => users.admins)
+  @JoinTable({ name: 'admin_users' })
+  users: User[];
 }

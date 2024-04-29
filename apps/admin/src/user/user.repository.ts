@@ -32,4 +32,11 @@ export class UserRepository extends CommonRepository {
 
     return paginator.paginate(queryBuilder);
   }
+
+  async findValidUser(inviteLink: string): Promise<User> {
+    return this.createQueryBuilder('user')
+      .where('invite_link =:inviteLink', { inviteLink })
+      .andWhere('invitation_expires_at > NOW()')
+      .getOne();
+  }
 }
