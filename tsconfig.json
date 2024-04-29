@@ -36,11 +36,11 @@
       "@app/user/*": [
         "libs/user/src/*"
       ],
-      "@app/sensors": [
-        "libs/sensors/src"
+      "@app/tasks": [
+        "libs/tasks/src"
       ],
-      "@app/sensors/*": [
-        "libs/sensors/src/*"
+      "@app/tasks/*": [
+        "libs/tasks/src/*"
       ],
       "@app/env": [
         "libs/env/src"
@@ -54,18 +54,6 @@
       "@app/database/*": [
         "libs/database/src/*"
       ],
-      "@app/payments": [
-        "libs/payments/src"
-      ],
-      "@app/payments/*": [
-        "libs/payments/src/*"
-      ],
-      "@app/games": [
-        "libs/games/src"
-      ],
-      "@app/games/*": [
-        "libs/games/src/*"
-      ]
     }
   },
   "ts-node": {

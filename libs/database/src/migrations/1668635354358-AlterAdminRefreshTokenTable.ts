@@ -17,16 +17,6 @@ export class AlterAdminRefreshTokenTable1668635354358
     await queryRunner.addColumn(
       'admin_refresh_token',
       new TableColumn({
-        name: 'fingerprint',
-        type: 'varchar',
-        length: '64',
-        isNullable: false,
-      }),
-    );
-
-    await queryRunner.addColumn(
-      'admin_refresh_token',
-      new TableColumn({
         name: 'ip',
         type: 'varchar',
         length: '46',
@@ -37,7 +27,6 @@ export class AlterAdminRefreshTokenTable1668635354358
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropColumn('admin_refresh_token', 'user_agent');
-    await queryRunner.dropColumn('admin_refresh_token', 'fingerprint');
     await queryRunner.dropColumn('admin_refresh_token', 'ip');
   }
 }

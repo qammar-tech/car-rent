@@ -6,8 +6,11 @@ import {
   Column,
   PrimaryGeneratedColumn,
   DeleteDateColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { UserStatus } from './user.types';
+import { Admin } from '@admin/admin/admin.entity';
 
 @Entity('user')
 export class User {
@@ -22,14 +25,6 @@ export class User {
   })
   @Column({ type: 'varchar', nullable: false, length: 36 })
   uuid: string;
-
-  @ApiProperty({
-    description: `User Credits`,
-    maximum: 36,
-    example: '28d1b563-eae0-4a5a-84cf-5b8f4b527411',
-  })
-  @Column({ type: 'varchar', nullable: true, length: 66 })
-  credits: string;
 
   @ApiProperty({
     example: 'John Doe',
@@ -61,7 +56,7 @@ export class User {
 
   @ApiProperty({
     description: 'User type',
-    example: UserType.Individual,
+    example: UserType.Admin,
     required: true,
     enum: UserType,
   })
@@ -94,4 +89,22 @@ export class User {
   })
   @Column({ type: 'enum', nullable: false, enum: UserStatus })
   status: UserStatus;
+
+  @ApiProperty({ description: 'Token Expires until date', required: true })
+  @Column({ type: 'datetime', nullable: false })
+  invitationExpiresAt: Date;
+
+  @ApiProperty({
+    example: 'asbvkjhsd',
+    required: false,
+    minimum: 1,
+    maximum: 128,
+    description: 'invite link hash',
+  })
+  @Column({ type: 'varchar', nullable: true, length: 128 })
+  inviteLink: string;
+
+  @ManyToMany(() => Admin, (admin) => admin.users)
+  @JoinTable({ name: 'admin_users' })
+  admins: Admin[];
 }

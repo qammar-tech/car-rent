@@ -26,7 +26,6 @@ export class AdminRefreshTokenRepository extends Repository<AdminRefreshToken> {
       token: randomBytes(32).toString('hex'),
       ip: params.ip,
       userAgent: params.headers?.['user-agent'] || null,
-      fingerprint: params.fingerprint,
       expireAt: DateTime.now()
         .plus({
           days: this.configService.get('jwtConfig.refreshTokenDurationDays'),

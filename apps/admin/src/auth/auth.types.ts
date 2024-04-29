@@ -6,6 +6,7 @@ export interface AccessTokenInterface {
   uuid: string;
   name: string;
   email: string;
+  role?: UserType;
   user?: any;
 }
 
@@ -15,9 +16,10 @@ export interface AuthRequest extends Request {
 }
 
 export enum UserType {
-  Individual = 'individual',
-  Organization = 'organization',
+  Admin = 'Admin',
+  Client = 'Client',
 }
+export const ROLES_KEY = 'roles';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface GuestRequest extends Request {}

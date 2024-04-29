@@ -15,9 +15,28 @@ export class AdminService {
     return this.adminRepository.findById(id);
   }
 
+  async findByUuid(uuid: string): Promise<Admin> {
+    return this.adminRepository.findOne({ where: { uuid } });
+  }
+
   async setPassword(email: string, password: string) {
     const passwordHash = await bcrypt.hash(password, 10);
 
     await this.adminRepository.update({ email }, { password: passwordHash });
+  }
+
+  async seed() {
+    const adminExists = await this.adminRepository.findOne({
+      where: { email: 'super@admin.com' },
+    });
+
+    if (!adminExists) {
+      const passwordHash = await bcrypt.hash('test', 10);
+      await this.adminRepository.save({
+        email: 'super@admin.com',
+        name: 'Super Admin',
+        password: passwordHash,
+      });
+    }
   }
 }

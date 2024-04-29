@@ -58,9 +58,9 @@ export class CreateUserValidationDto {
   status: UserStatus;
 
   @ApiProperty({
-    example: UserType.Individual,
+    example: UserType.Admin,
     required: false,
-    default: UserType.Individual,
+    default: UserType.Admin,
   })
   @IsEnum(UserType)
   role: UserType;

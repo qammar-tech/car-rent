@@ -17,9 +17,8 @@ import {
 } from 'nestjs-i18n';
 import { Locale } from '@app/common/translations/translation.types';
 import { DatabaseModule } from '@app/database/database.module';
-import { SensorModule } from './sensors/sensors.module';
-import { PaymentsModule } from './payments/payments.module';
-import { GamesModule } from './games/games.module';
+import { AdminSeederService } from './admin/admin-seed.service';
+import { TasksModule } from './tasks/tasks.module';
 
 EnvHelper.verifyNodeEnv();
 
@@ -49,11 +48,9 @@ EnvHelper.verifyNodeEnv();
     UserModule,
     AuthModule,
     AdminModule,
-    SensorModule,
-    PaymentsModule,
-    GamesModule,
+    TasksModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AdminSeederService],
 })
 export class AppModule {}

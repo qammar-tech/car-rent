@@ -14,11 +14,8 @@ export class RefreshTokenValidator implements ValidatorConstraintInterface {
   ) {}
 
   async validate(token: string, args: ValidationArguments): Promise<boolean> {
-    const { fingerprint } = args.object as RefreshTokensDto;
-
     const refreshToken = await this.adminRefreshTokenService.findOneBy({
       token,
-      fingerprint,
     });
 
     return (

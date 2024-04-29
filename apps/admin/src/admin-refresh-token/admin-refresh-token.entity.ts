@@ -18,14 +18,6 @@ export class AdminRefreshToken {
   @Column({ type: 'varchar', nullable: false, length: 1000 })
   userAgent: string;
 
-  @ApiProperty({
-    description: 'Unique client fingerprint',
-    maximum: 64,
-    required: true,
-  })
-  @Column({ type: 'varchar', nullable: false, length: 64 })
-  fingerprint: string;
-
   @ApiProperty({ description: 'IP', maximum: 46, required: true })
   @Column({ type: 'varchar', nullable: false, length: 46 })
   ip: string;
