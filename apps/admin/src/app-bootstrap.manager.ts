@@ -25,8 +25,6 @@ export class AppBootstrapManager {
       .use(json({ limit: '50mb' }))
       .use(cookieParser())
       .setGlobalPrefix('api/v1')
-      // .useGlobalGuards(new JwtAuthGuard(reflector))
-      // .useGlobalFilters(new AllExceptionsFilter())
       .useGlobalPipes(
         new ValidationPipe({
           whitelist: true,
@@ -38,9 +36,6 @@ export class AppBootstrapManager {
       );
 
     app.enableCors();
-
-    // app.use(addBodyToResponse);
-    // app.useLogger(app.get(Logger));
 
     return app;
   }
